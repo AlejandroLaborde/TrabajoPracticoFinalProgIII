@@ -22,12 +22,33 @@ class ticketControler implements IApiControler{
 
     public function TraerUno($request, $response, $args){
         $parametros=$request->getParams();
-        $rol= ticket::where('codigo',$parametros['codigo'])
-        //->join('tickets_encargados','tickets.codigo','=','tickets_encargados.codTicket')
-        ->join('estados','tickets.estado','estados.id')
-        ->join('mesas','tickets.codMesa','mesas.id')       
-        ->get();
-        $nuevoResp=$response->withJson($rol);
+        $codigoPedido=$parametros['codigo'];
+        $codigoMesa=$parametros['mesa'];
+        
+        try{
+            
+            $rol= ticket::where('codigo',$parametros['codigo'])
+            //->join('tickets_encargados','tickets.codigo','=','tickets_encargados.codTicket')
+            ->join('estados','tickets.estado','estados.id')
+            ->join('mesas','tickets.codMesa','mesas.id')       
+            ->get();
+           
+            if($rol[0]->codMesa==$codigoMesa && $codigoPedido==$rol[0]->codigo){
+
+                $ret=new ticket();
+                $ret->estado=$rol[0]->estado;
+                $ret->tiempo=$rol[0]->tiempo;
+                
+                $nuevoResp=$response->withJson($ret);
+            }else
+            {
+                $nuevoResp=$response->withJson("La combinacion codigo - mesa es incorrecto");
+            }
+           
+        }catch(Exception $e){
+            $nuevoResp=$response->withJson("Error al leer los parametros");
+        }
+        
     	return $nuevoResp;
     }
 

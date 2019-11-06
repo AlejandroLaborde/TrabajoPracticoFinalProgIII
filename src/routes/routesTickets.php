@@ -22,7 +22,7 @@ return function (App $app) {
         $this->get('/estadosTickets', ticketControler::class . ':Estados');
 
         //recibe ticket a cobrar
-        $this->get('/cobrar', ticketControler::class . ':TraerUno');
+        $this->get('/cobrar', ticketControler::class . ':123');
 
 
     });

@@ -7,6 +7,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 
 class producto extends \Illuminate\Database\Eloquent\Model {  
   
+    public $timestamps = false;
 
 }
 ?>

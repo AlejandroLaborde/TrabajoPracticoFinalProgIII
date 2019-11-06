@@ -11,11 +11,6 @@ use App\Models\cdApi;
 return function (App $app) {
     $container = $app->getContainer();
 
-    // Rutas PDO
-    $routes = require __DIR__ . '/../src/routes/routesPDO.php';
-    $routes($app);
-    
-
     // Rutas ORM
     $routes = require __DIR__ . '/../src/routes/routesORM.php';
     $routes($app);
@@ -23,6 +18,16 @@ return function (App $app) {
     // Rutas JWT
     $routes = require __DIR__ . '/../src/routes/routesJWT.php';
     $routes($app);
+
+    // Rutas Encargadpos
+    $routes = require __DIR__ . '/../src/routes/routesEncargados.php';
+    $routes($app);
+
+    // Rutas Tickets
+    $routes = require __DIR__ . '/../src/routes/routesTickets.php';
+    $routes($app);
+    
+
 
 
     $app->get('/[{name}]', function (Request $request, Response $response, array $args) use ($container) {

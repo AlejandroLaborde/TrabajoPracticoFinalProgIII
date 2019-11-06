@@ -4,7 +4,7 @@ use Firebase\JWT\JWT;
 
 class AutentificadorJWT
 {
-    private static $claveSecreta = 'ClaveSuperSecreta@';
+    private static $claveSecreta = 'ClaveSecreta2695175342382582';
     private static $tipoEncriptacion = ['HS256'];
     private static $aud = null;
     
@@ -18,16 +18,15 @@ class AutentificadorJWT
         */
         $payload = array(
         	'iat'=>$ahora,
-            'exp' => $ahora + (60),
-            'aud' => self::Aud(),
             'data' => $datos,
-            'app'=> "API REST CD UTN FRA"
+            'app'=> "TrabajoPracticoLabordeParodiAlejandro"
         );
         return JWT::encode($payload, self::$claveSecreta);
     }
     
     public static function VerificarToken($token)
     {
+        $valido=false;
         if(empty($token))
         {
             throw new Exception("El token esta vacio.");
@@ -40,15 +39,11 @@ class AutentificadorJWT
             self::$claveSecreta,
             self::$tipoEncriptacion
         );
+            $valido=true;
         } catch (Exception $e) {
             throw $e;
         } 
         
-        // si no da error,  verifico los datos de AUD que uso para saber de que lugar viene  
-        if($decodificado->aud !== self::Aud())
-        {
-            throw new Exception("No es el usuario valido");
-        }
     }
     
    
@@ -68,21 +63,5 @@ class AutentificadorJWT
             self::$tipoEncriptacion
         )->data;
     }
-    private static function Aud()
-    {
-        $aud = '';
-        
-        if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
-            $aud = $_SERVER['HTTP_CLIENT_IP'];
-        } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-            $aud = $_SERVER['HTTP_X_FORWARDED_FOR'];
-        } else {
-            $aud = $_SERVER['REMOTE_ADDR'];
-        }
-        
-        $aud .= @$_SERVER['HTTP_USER_AGENT'];
-        $aud .= gethostname();
-        
-        return sha1($aud);
-    }
+
 }

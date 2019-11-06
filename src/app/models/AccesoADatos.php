@@ -1,8 +1,8 @@
 <?php
-namespace App\Models\PDO;
+namespace App\Models\Archivos;
 
 
-class AccesoDatos
+class AccesoADatos
 {
     private static $ObjetoAccesoDatos;
     private $objetoPDO;
@@ -10,7 +10,7 @@ class AccesoDatos
     private function __construct()
     {
         try { 
-            $this->objetoPDO = new \PDO('mysql:host=localhost;dbname=cdcol;charset=utf8', 'root', '', array(\PDO::ATTR_EMULATE_PREPARES => false,\PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION));
+            $this->objetoPDO = new \PDO('mysql:host=localhost;dbname=comandera;charset=utf8', 'root', '', array(\PDO::ATTR_EMULATE_PREPARES => false,\PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION));
             $this->objetoPDO->exec("SET CHARACTER SET utf8");
             } 
         catch (PDOException $e) { 
@@ -31,7 +31,7 @@ class AccesoDatos
     public static function dameUnObjetoAcceso()
     { 
         if (!isset(self::$ObjetoAccesoDatos)) {          
-            self::$ObjetoAccesoDatos = new AccesoDatos(); 
+            self::$ObjetoAccesoDatos = new AccesoADatos(); 
         } 
         return self::$ObjetoAccesoDatos;        
     }

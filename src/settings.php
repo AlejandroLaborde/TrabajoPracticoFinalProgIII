@@ -30,11 +30,11 @@ return [
         'db' => [
            'driver' => 'mysql',
             'host' => 'localhost',
-            'database' => 'cdcol',
+            'database' => 'comandera',
             'username' => 'root',
             'password' => '',
             'charset'   => 'utf8',
-            'collation' => 'utf8_unicode_ci',
+            'collation' => 'utf8_spanish2_ci',
             'prefix'    => '',
         ],
 

@@ -8,8 +8,8 @@ use App\Models\IApiControler;
 use App\Models\AutentificadorJWT;
 
 
-include_once __DIR__ . '/../app/modelAPI/AutentificadorJWT.php';
 include_once __DIR__ . '/encargado.php';
+
 
 class encargadosControler {
 
@@ -21,6 +21,7 @@ class encargadosControler {
         
         $token= AutentificadorJWT::CrearToken($datos); 
         $newResponse = $response->withJson($token, 200); 
+
         return $newResponse;
 
     }

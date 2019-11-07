@@ -16,9 +16,7 @@ return function (App $app) {
             return $res->withJson("logIn");
         });
 
-        $this->get('/AltaEncargado', function($re,$res,$args){
-            return $res->withJson("AltaEncargado");
-        });
+        $this->get('/altaEncargado', encargadosControler::class . ':altaUsuario');
 
         $this->get('/BajaEncargado', function($re,$res,$args){
             return $res->withJson("BajaEncargado",200);

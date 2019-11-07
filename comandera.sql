@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 06-11-2019 a las 19:24:47
+-- Tiempo de generación: 07-11-2019 a las 02:52:22
 -- Versión del servidor: 10.4.8-MariaDB
 -- Versión de PHP: 7.3.11
 
@@ -33,19 +33,20 @@ CREATE TABLE `encargados` (
   `nombre` varchar(50) COLLATE utf8_spanish2_ci NOT NULL,
   `apellido` varchar(50) COLLATE utf8_spanish2_ci NOT NULL,
   `rol` int(11) NOT NULL,
-  `clave` varchar(50) COLLATE utf8_spanish2_ci NOT NULL
+  `clave` varchar(50) COLLATE utf8_spanish2_ci NOT NULL,
+  `usuario` varchar(50) COLLATE utf8_spanish2_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 --
 -- Volcado de datos para la tabla `encargados`
 --
 
-INSERT INTO `encargados` (`id`, `nombre`, `apellido`, `rol`, `clave`) VALUES
-(1, 'alejandro', 'laborde', 2, '123'),
-(2, 'daniel', 'laborde', 1, '123'),
-(3, 'gustavo', 'laborde', 3, '123'),
-(4, 'Jenkins', 'laborde', 4, '123'),
-(5, 'Composer', 'laborde', 5, '123');
+INSERT INTO `encargados` (`id`, `nombre`, `apellido`, `rol`, `clave`, `usuario`) VALUES
+(1, 'alejandro', 'laborde', 2, '123', 'al34224'),
+(2, 'daniel', 'laborde', 1, '123', 'dan123'),
+(3, 'gustavo', 'laborde', 3, '123', 'gus123'),
+(4, 'Jenkins', 'laborde', 4, '123', 'jen123'),
+(5, 'Composer', 'laborde', 5, '123', 'com123');
 
 -- --------------------------------------------------------
 
@@ -91,7 +92,7 @@ INSERT INTO `mesas` (`id`, `codMesa`) VALUES
 (6, 'MESA6'),
 (7, 'MESA7'),
 (8, 'MESA8'),
-(9, 'MESA69');
+(9, 'MESA9');
 
 -- --------------------------------------------------------
 
@@ -207,7 +208,75 @@ INSERT INTO `ticket_productos` (`codigo`, `producto`) VALUES
 ('a07mY', 1),
 ('a07mY', 3),
 ('a07mY', 5),
-
+('a07mY', 8),
+('hSTI3', 1),
+('hSTI3', 3),
+('hSTI3', 5),
+('hSTI3', 8),
+('wu3Ga', 1),
+('wu3Ga', 3),
+('wu3Ga', 5),
+('wu3Ga', 8),
+('ciy9p', 1),
+('ciy9p', 3),
+('ciy9p', 5),
+('ciy9p', 8),
+('8n9QH', 1),
+('8n9QH', 3),
+('8n9QH', 5),
+('8n9QH', 8),
+('XFNXO', 1),
+('XFNXO', 3),
+('XFNXO', 5),
+('XFNXO', 8),
+('WDdzC', 1),
+('WDdzC', 3),
+('WDdzC', 5),
+('WDdzC', 8),
+('2C3Jr', 1),
+('2C3Jr', 3),
+('2C3Jr', 5),
+('2C3Jr', 8),
+('eszeY', 1),
+('eszeY', 3),
+('eszeY', 5),
+('eszeY', 8),
+('YYwSH', 1),
+('YYwSH', 3),
+('YYwSH', 5),
+('YYwSH', 8),
+('AV0cQ', 1),
+('AV0cQ', 3),
+('AV0cQ', 5),
+('AV0cQ', 8),
+('Xamcd', 1),
+('Xamcd', 3),
+('Xamcd', 5),
+('Xamcd', 8),
+('hvpig', 1),
+('hvpig', 3),
+('hvpig', 5),
+('hvpig', 8),
+('JOY3g', 1),
+('JOY3g', 3),
+('JOY3g', 5),
+('JOY3g', 8),
+('N77c8', 1),
+('N77c8', 3),
+('N77c8', 5),
+('N77c8', 8),
+('yQAWk', 1),
+('yQAWk', 3),
+('yQAWk', 5),
+('yQAWk', 8),
+('ItgCg', 1),
+('ItgCg', 3),
+('ItgCg', 5),
+('ItgCg', 8),
+('kRHGg', 1),
+('kRHGg', 3),
+('kRHGg', 5),
+('kRHGg', 8);
 
 --
 -- Índices para tablas volcadas

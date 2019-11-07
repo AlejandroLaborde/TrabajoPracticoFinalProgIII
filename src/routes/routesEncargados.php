@@ -3,9 +3,9 @@
 use Slim\App;
 use Slim\Http\Request;
 use Slim\Http\Response;
-use App\Models\AutentificadorJWT;
+use App\Models\ORM\encargadosControler;
 
-include_once __DIR__ . '/../app/modelAPI/AutentificadorJWT.php';
+include_once __DIR__ . '/../../src/app/modelORM/encargadosControler.php';
 
 return function (App $app) {
     $container = $app->getContainer();

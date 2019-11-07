@@ -282,3 +282,16 @@
 [2019-11-07 00:12:11] UTN FRA LOGGER.INFO: metodo=GET, URI=http%3A%2F%2Flocalhost%3A82%2FTrabajoPracticoFinalProgIII%2Fpublic, RUTA=tickets%2FobtenerTicket, autoridad=localhost%3A82 [] {"uid":"acf2d50"}
 [2019-11-07 00:12:47] UTN FRA LOGGER.INFO: metodo=GET, URI=http%3A%2F%2Flocalhost%3A82%2FTrabajoPracticoFinalProgIII%2Fpublic, RUTA=tickets%2FobtenerTicket, autoridad=localhost%3A82 [] {"uid":"2dcaaa7"}
 [2019-11-07 00:12:54] UTN FRA LOGGER.INFO: metodo=GET, URI=http%3A%2F%2Flocalhost%3A82%2FTrabajoPracticoFinalProgIII%2Fpublic, RUTA=tickets%2FobtenerTicket, autoridad=localhost%3A82 [] {"uid":"1c79dac"}
+[2019-11-07 01:50:52] UTN FRA LOGGER.INFO: metodo=GET, URI=http%3A%2F%2Flocalhost%2FTrabajoPracticoFinalProgIII%2Fpublic, RUTA=tickets%2FobtenerTicket, autoridad=localhost [] {"uid":"449883d"}
+[2019-11-07 01:51:38] UTN FRA LOGGER.INFO: metodo=GET, URI=http%3A%2F%2Flocalhost%2FTrabajoPracticoFinalProgIII%2Fpublic, RUTA=tickets%2FobtenerTicket, autoridad=localhost [] {"uid":"08c368b"}
+[2019-11-07 02:21:45] UTN FRA LOGGER.INFO: metodo=POST, URI=http%3A%2F%2Flocalhost%2FTrabajoPracticoFinalProgIII%2Fpublic, RUTA=token%2FlogIn, autoridad=localhost [] {"uid":"73a47c2"}
+[2019-11-07 02:21:56] UTN FRA LOGGER.INFO: metodo=GET, URI=http%3A%2F%2Flocalhost%2FTrabajoPracticoFinalProgIII%2Fpublic, RUTA=token%2FlogIn, autoridad=localhost [] {"uid":"4fae7d9"}
+[2019-11-07 02:22:17] UTN FRA LOGGER.INFO: metodo=GET, URI=http%3A%2F%2Flocalhost%2FTrabajoPracticoFinalProgIII%2Fpublic, RUTA=token%2FlogIn, autoridad=localhost [] {"uid":"74afaf4"}
+[2019-11-07 02:23:38] UTN FRA LOGGER.INFO: metodo=GET, URI=http%3A%2F%2Flocalhost%2FTrabajoPracticoFinalProgIII%2Fpublic, RUTA=token%2FaltaUsuario, autoridad=localhost [] {"uid":"cf17fc7"}
+[2019-11-07 02:24:49] UTN FRA LOGGER.INFO: metodo=POST, URI=http%3A%2F%2Flocalhost%2FTrabajoPracticoFinalProgIII%2Fpublic, RUTA=token%2FaltaUsuario, autoridad=localhost [] {"uid":"d935326"}
+[2019-11-07 02:32:01] UTN FRA LOGGER.INFO: metodo=POST, URI=http%3A%2F%2Flocalhost%2FTrabajoPracticoFinalProgIII%2Fpublic, RUTA=encargados%2FlogIn, autoridad=localhost [] {"uid":"6f4a3aa"}
+[2019-11-07 02:32:28] UTN FRA LOGGER.INFO: metodo=POST, URI=http%3A%2F%2Flocalhost%2FTrabajoPracticoFinalProgIII%2Fpublic, RUTA=encargados%2FaltaEncargado, autoridad=localhost [] {"uid":"80971a1"}
+[2019-11-07 02:32:46] UTN FRA LOGGER.INFO: metodo=POST, URI=http%3A%2F%2Flocalhost%2FTrabajoPracticoFinalProgIII%2Fpublic, RUTA=encargados%2FAltaEncargado, autoridad=localhost [] {"uid":"8789940"}
+[2019-11-07 02:32:52] UTN FRA LOGGER.INFO: metodo=GET, URI=http%3A%2F%2Flocalhost%2FTrabajoPracticoFinalProgIII%2Fpublic, RUTA=encargados%2FAltaEncargado, autoridad=localhost [] {"uid":"78f30a9"}
+[2019-11-07 02:33:00] UTN FRA LOGGER.INFO: metodo=GET, URI=http%3A%2F%2Flocalhost%2FTrabajoPracticoFinalProgIII%2Fpublic, RUTA=encargados%2FlogIn, autoridad=localhost [] {"uid":"65dc778"}
+[2019-11-07 02:53:40] UTN FRA LOGGER.INFO: metodo=GET, URI=http%3A%2F%2Flocalhost%2FTrabajoPracticoFinalProgIII%2Fpublic, RUTA=encargados%2FlogIn, autoridad=localhost [] {"uid":"53b7e5f"}

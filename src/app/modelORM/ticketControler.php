@@ -94,6 +94,8 @@ class ticketControler implements IApiControler{
     
         }
 
+        ticketControler::calculaPrecio($codigoTicket);
+        
         $nuevoRetorno= $response->withJson($msj);
     	return $nuevoRetorno;
     }
@@ -114,6 +116,37 @@ class ticketControler implements IApiControler{
     	return $newResponse;
     }
 
+
+    public function cambiarEstado($ticketCodigo,$estado){
+
+        $ticket = ticket::where('codigo',$ticketCodigo)->first();
+        $ticket->estado=$estado;
+        $ticket->save();
+    }
+
+    public function cambiaTiempo($ticket){
+        
+        $pedido=ticket::where('codigo',$ticket)->first();
+        $tiempo= ticket_producto::where('codigo',$ticket)
+        ->where('ticket_productos.estado','!=','3')
+        ->join('productos','ticket_productos.producto','productos.id')
+        ->sum('tiempo');
+        //calculo el tiempo en base a los productos del pedido que aun no terminaron
+        $pedido->tiempo=$tiempo;
+        $pedido->save();
+
+    }
+
+    public function calculaPrecio($ticket){
+        $pedido=ticket::where('codigo',$ticket)->first();
+        $precios= ticket_producto::where('codigo',$ticket)
+        ->join('productos','ticket_productos.producto','productos.id')
+        ->sum('precio');
+        $pedido->precio=$precios;
+        $pedido->save();
+
+        return $precios;
+    }
 
     public function generateRandomTicket() {
         $length=5;

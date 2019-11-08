@@ -46,17 +46,14 @@ class AutentificadorJWT
     {
         return JWT::decode(
             $token,
-            self::$claveSecreta,
-            self::$tipoEncriptacion
+            AutentificadorJWT::$claveSecreta,
+            AutentificadorJWT::$tipoEncriptacion
         );
     }
      public static function ObtenerData($token)
     {
-        return JWT::decode(
-            $token,
-            self::$claveSecreta,
-            self::$tipoEncriptacion
-        )->data;
+        $ret=JWT::decode($token,AutentificadorJWT::$claveSecreta,AutentificadorJWT::$tipoEncriptacion);
+        return $ret->datos;
     }
 
 }

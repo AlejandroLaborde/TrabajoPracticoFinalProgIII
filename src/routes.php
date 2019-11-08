@@ -22,6 +22,10 @@ return function (App $app) {
     // Rutas Tickets
     $routes = require __DIR__ . '/../src/routes/routesTickets.php';
     $routes($app);
+
+    // Rutas Preparacion
+    $routes = require __DIR__ . '/../src/routes/routesPreparacion.php';
+    $routes($app);
     
 
 

@@ -16,9 +16,8 @@ return function (App $app) {
 
         $this->post('/altaEncargado', encargadosControler::class . ':altaUsuario');
 
-        $this->get('/BajaEncargado', function($re,$res,$args){
-            return $res->withJson("BajaEncargado",200);
-        });
+        $this->get('/BajaEncargado', encargadosControler::class . ':bajaUsuario');
+
 
 
     });

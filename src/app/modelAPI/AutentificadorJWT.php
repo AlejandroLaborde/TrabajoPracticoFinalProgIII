@@ -10,15 +10,10 @@ class AutentificadorJWT
     
     public static function CrearToken($datos)
     {
-        $ahora = time();
-        /*
-         parametros del payload
-         https://tools.ietf.org/html/rfc7519#section-4.1
-         + los que quieras ej="'app'=> "API REST CD 2019" 
-        */
+       
         $payload = array(
-        	'iat'=>$ahora,
-            'data' => $datos,
+        	
+            'datos'=>$datos,
             'app'=> "TrabajoPracticoLabordeParodiAlejandro"
         );
         return JWT::encode($payload, self::$claveSecreta);

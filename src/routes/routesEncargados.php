@@ -12,11 +12,9 @@ return function (App $app) {
 
 	$app->group('/encargados', function(){
 
-        $this->get('/logIn', function($re,$res,$args){
-            return $res->withJson("logIn");
-        });
+        $this->get('/logIn', encargadosControler::class . ':logIn');
 
-        $this->get('/altaEncargado', encargadosControler::class . ':altaUsuario');
+        $this->post('/altaEncargado', encargadosControler::class . ':altaUsuario');
 
         $this->get('/BajaEncargado', function($re,$res,$args){
             return $res->withJson("BajaEncargado",200);

@@ -9,9 +9,7 @@ use App\Models\ORM\role;
 use App\Models\ORM\rolControler;
 
 
-include_once __DIR__ . '/../../src/app/modelORM/cd.php';
 include_once __DIR__ . '/../../src/app/modelORM/role.php';
-include_once __DIR__ . '/../../src/app/modelORM/cdControler.php';
 include_once __DIR__ . '/../../src/app/modelORM/rolControler.php';
 
 return function (App $app) {

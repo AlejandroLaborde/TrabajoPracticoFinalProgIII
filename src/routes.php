@@ -14,11 +14,7 @@ return function (App $app) {
     // Rutas ORM
     $routes = require __DIR__ . '/../src/routes/routesORM.php';
     $routes($app);
-
-    // Rutas JWT
-    $routes = require __DIR__ . '/../src/routes/routesJWT.php';
-    $routes($app);
-
+    
     // Rutas Encargadpos
     $routes = require __DIR__ . '/../src/routes/routesEncargados.php';
     $routes($app);

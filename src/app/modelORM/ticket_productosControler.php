@@ -14,8 +14,40 @@ class ticket_productosControler{
         return ticket_producto::all();
     }
 
-    public function cambiarEstado($codigo,$producto,$estado){
-        //cambia el estado de un producto determinado
+    
+    public function verPendientes($codigo,$encargadoID){
+
+        if($encargadoID==5){
+            $data=ticket_producto::join('productos','ticket_productos.producto','productos.id')
+            ->join('roles','roles.id','productos.encargado')
+            ->where('ticket_productos.estado','=','1')
+            ->where('codigo','=',$codigo)
+            ->get();    
+        }else{
+            $data=ticket_producto::join('productos','ticket_productos.producto','productos.id')
+            ->join('roles','roles.id','productos.encargado')
+            ->where('ticket_productos.estado','=','1')
+            ->where('productos.encargado','=',$encargadoID)
+            ->where('codigo','=',$codigo)
+            //->select(array('codigo','descripcion','puesto'))
+            ->get();
+        }
+
+        return $data;
+    }
+
+    public function cambiarEstado($codigo,$encargadoID,$estado){
+        $data=ticket_producto::join('productos','ticket_productos.producto','productos.id')
+            ->join('roles','roles.id','productos.encargado')
+            ->where('ticket_productos.estado','=','1')
+            ->where('productos.encargado','=',$encargadoID)
+            ->where('codigo','=',$codigo)
+            ->get();
+        foreach ($data as $value) {
+            $value->estado=2;
+            $value->save();
+        }
+        
     }
 
     public function estadoTodosProductos($codigo){

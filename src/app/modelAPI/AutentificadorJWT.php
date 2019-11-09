@@ -52,6 +52,7 @@ class AutentificadorJWT
     }
      public static function ObtenerData($token)
     {
+        $ret= new \stdClass;
         $ret=JWT::decode($token,AutentificadorJWT::$claveSecreta,AutentificadorJWT::$tipoEncriptacion);
         return $ret->datos;
     }

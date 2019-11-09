@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 07-11-2019 a las 02:52:22
+-- Tiempo de generación: 09-11-2019 a las 16:55:32
 -- Versión del servidor: 10.4.8-MariaDB
 -- Versión de PHP: 7.3.11
 
@@ -134,14 +134,14 @@ INSERT INTO `productos` (`id`, `descripcion`, `encargado`, `tiempo`, `precio`) V
 
 CREATE TABLE `roles` (
   `id` int(11) NOT NULL,
-  `encargado` varchar(50) COLLATE utf8_spanish2_ci NOT NULL
+  `puesto` varchar(50) COLLATE utf8_spanish2_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 --
 -- Volcado de datos para la tabla `roles`
 --
 
-INSERT INTO `roles` (`id`, `encargado`) VALUES
+INSERT INTO `roles` (`id`, `puesto`) VALUES
 (1, 'bartender'),
 (2, 'cervecero'),
 (3, 'cocinero'),
@@ -175,7 +175,7 @@ INSERT INTO `tickets` (`id`, `codigo`, `tiempo`, `precio`, `estado`, `cliente`, 
 (3, 'wu3Ga', 0, 0, 1, 'iara', '', 3),
 (4, 'ciy9p', 0, 0, 1, 'iara', '', 4),
 (5, '8n9QH', 0, 0, 1, 'iara', '', 2),
-(6, 'XFNXO', 0, 0, 2, 'iara', '', 9),
+(6, 'XFNXO', 150, 235, 2, 'iara', '', 9),
 (7, 'WDdzC', 0, 0, 3, 'iara', '', 7),
 (8, '2C3Jr', 0, 0, 1, 'iara', '', 3),
 (9, 'eszeY', 0, 0, 1, 'iara', '', 9),
@@ -187,7 +187,8 @@ INSERT INTO `tickets` (`id`, `codigo`, `tiempo`, `precio`, `estado`, `cliente`, 
 (15, 'N77c8', 0, 0, 1, 'iara', '', 7),
 (16, 'yQAWk', 0, 0, 1, 'iara', '', 5),
 (17, 'ItgCg', 0, 0, 1, 'iara', '', 5),
-(18, 'kRHGg', 0, 0, 1, 'iara', '', 4);
+(18, 'kRHGg', 0, 0, 1, 'iara', '', 4),
+(20, 'aILUo', 90, 300, 1, 'alejandro', '', 7);
 
 -- --------------------------------------------------------
 
@@ -197,86 +198,94 @@ INSERT INTO `tickets` (`id`, `codigo`, `tiempo`, `precio`, `estado`, `cliente`, 
 
 CREATE TABLE `ticket_productos` (
   `codigo` varchar(5) COLLATE utf8_spanish2_ci NOT NULL,
-  `producto` int(11) NOT NULL
+  `producto` int(11) NOT NULL,
+  `estado` int(11) NOT NULL,
+  `id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 --
 -- Volcado de datos para la tabla `ticket_productos`
 --
 
-INSERT INTO `ticket_productos` (`codigo`, `producto`) VALUES
-('a07mY', 1),
-('a07mY', 3),
-('a07mY', 5),
-('a07mY', 8),
-('hSTI3', 1),
-('hSTI3', 3),
-('hSTI3', 5),
-('hSTI3', 8),
-('wu3Ga', 1),
-('wu3Ga', 3),
-('wu3Ga', 5),
-('wu3Ga', 8),
-('ciy9p', 1),
-('ciy9p', 3),
-('ciy9p', 5),
-('ciy9p', 8),
-('8n9QH', 1),
-('8n9QH', 3),
-('8n9QH', 5),
-('8n9QH', 8),
-('XFNXO', 1),
-('XFNXO', 3),
-('XFNXO', 5),
-('XFNXO', 8),
-('WDdzC', 1),
-('WDdzC', 3),
-('WDdzC', 5),
-('WDdzC', 8),
-('2C3Jr', 1),
-('2C3Jr', 3),
-('2C3Jr', 5),
-('2C3Jr', 8),
-('eszeY', 1),
-('eszeY', 3),
-('eszeY', 5),
-('eszeY', 8),
-('YYwSH', 1),
-('YYwSH', 3),
-('YYwSH', 5),
-('YYwSH', 8),
-('AV0cQ', 1),
-('AV0cQ', 3),
-('AV0cQ', 5),
-('AV0cQ', 8),
-('Xamcd', 1),
-('Xamcd', 3),
-('Xamcd', 5),
-('Xamcd', 8),
-('hvpig', 1),
-('hvpig', 3),
-('hvpig', 5),
-('hvpig', 8),
-('JOY3g', 1),
-('JOY3g', 3),
-('JOY3g', 5),
-('JOY3g', 8),
-('N77c8', 1),
-('N77c8', 3),
-('N77c8', 5),
-('N77c8', 8),
-('yQAWk', 1),
-('yQAWk', 3),
-('yQAWk', 5),
-('yQAWk', 8),
-('ItgCg', 1),
-('ItgCg', 3),
-('ItgCg', 5),
-('ItgCg', 8),
-('kRHGg', 1),
-('kRHGg', 3),
-('kRHGg', 5),
-('kRHGg', 8);
+INSERT INTO `ticket_productos` (`codigo`, `producto`, `estado`, `id`) VALUES
+('a07mY', 1, 2, 1),
+('a07mY', 3, 1, 2),
+('a07mY', 5, 1, 3),
+('a07mY', 8, 1, 4),
+('hSTI3', 1, 1, 5),
+('hSTI3', 3, 1, 6),
+('hSTI3', 5, 1, 7),
+('hSTI3', 8, 1, 8),
+('wu3Ga', 1, 1, 9),
+('wu3Ga', 3, 1, 10),
+('wu3Ga', 5, 1, 11),
+('wu3Ga', 8, 1, 12),
+('ciy9p', 1, 1, 13),
+('ciy9p', 3, 1, 14),
+('ciy9p', 5, 1, 15),
+('ciy9p', 8, 1, 16),
+('8n9QH', 1, 1, 17),
+('8n9QH', 3, 1, 18),
+('8n9QH', 5, 1, 19),
+('8n9QH', 8, 1, 20),
+('XFNXO', 1, 1, 21),
+('XFNXO', 3, 1, 22),
+('XFNXO', 5, 3, 23),
+('XFNXO', 8, 1, 24),
+('WDdzC', 1, 1, 25),
+('WDdzC', 3, 1, 26),
+('WDdzC', 5, 1, 27),
+('WDdzC', 8, 1, 28),
+('2C3Jr', 1, 1, 29),
+('2C3Jr', 3, 1, 30),
+('2C3Jr', 5, 1, 31),
+('2C3Jr', 8, 1, 32),
+('eszeY', 1, 1, 33),
+('eszeY', 3, 1, 34),
+('eszeY', 5, 1, 35),
+('eszeY', 8, 1, 36),
+('YYwSH', 1, 1, 37),
+('YYwSH', 3, 1, 38),
+('YYwSH', 5, 1, 39),
+('YYwSH', 8, 1, 40),
+('AV0cQ', 1, 1, 41),
+('AV0cQ', 3, 1, 42),
+('AV0cQ', 5, 1, 43),
+('AV0cQ', 8, 1, 44),
+('Xamcd', 1, 1, 45),
+('Xamcd', 3, 1, 46),
+('Xamcd', 5, 1, 47),
+('Xamcd', 8, 1, 48),
+('hvpig', 1, 1, 49),
+('hvpig', 3, 1, 50),
+('hvpig', 5, 1, 51),
+('hvpig', 8, 1, 52),
+('JOY3g', 1, 1, 53),
+('JOY3g', 3, 1, 54),
+('JOY3g', 5, 1, 55),
+('JOY3g', 8, 1, 56),
+('N77c8', 1, 1, 57),
+('N77c8', 3, 1, 58),
+('N77c8', 5, 1, 59),
+('N77c8', 8, 1, 60),
+('yQAWk', 1, 1, 61),
+('yQAWk', 3, 1, 62),
+('yQAWk', 5, 1, 63),
+('yQAWk', 8, 1, 64),
+('ItgCg', 1, 1, 65),
+('ItgCg', 3, 1, 66),
+('ItgCg', 5, 1, 67),
+('ItgCg', 8, 1, 68),
+('kRHGg', 1, 1, 69),
+('kRHGg', 3, 1, 70),
+('kRHGg', 5, 1, 71),
+('kRHGg', 8, 1, 72),
+('p8Mm2', 1, 0, 73),
+('p8Mm2', 1, 0, 74),
+('p8Mm2', 1, 0, 75),
+('aILUo', 1, 0, 76),
+('aILUo', 1, 0, 77),
+('aILUo', 1, 0, 78);
 
 --
 -- Índices para tablas volcadas
@@ -286,7 +295,8 @@ INSERT INTO `ticket_productos` (`codigo`, `producto`) VALUES
 -- Indices de la tabla `encargados`
 --
 ALTER TABLE `encargados`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `usuario` (`usuario`);
 
 --
 -- Indices de la tabla `estados`
@@ -319,6 +329,12 @@ ALTER TABLE `tickets`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `ticket_productos`
+--
+ALTER TABLE `ticket_productos`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT de las tablas volcadas
 --
 
@@ -326,7 +342,7 @@ ALTER TABLE `tickets`
 -- AUTO_INCREMENT de la tabla `encargados`
 --
 ALTER TABLE `encargados`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT de la tabla `estados`
@@ -356,7 +372,13 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT de la tabla `tickets`
 --
 ALTER TABLE `tickets`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+
+--
+-- AUTO_INCREMENT de la tabla `ticket_productos`
+--
+ALTER TABLE `ticket_productos`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=79;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

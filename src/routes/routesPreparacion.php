@@ -12,12 +12,14 @@ return function (App $app) {
 
 	$app->group('/preparacion', function(){
 
-        $this->get('/tomarPedido', productosControler::class . ':tomarPedido');
 
+        $this->get('/prepararPedido', productosControler::class . ':prepararPedido');
+        
+        $this->get('/verPendientes', productosControler::class . ':verPendientes');
+        
         $this->get('/finalizarPedido', productosControler::class . ':finalizarPedido');
 
         $this->get('/eliminarPedido', productosControler::class . ':eliminarPedido');
-
 
     });
 

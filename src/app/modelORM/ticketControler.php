@@ -8,12 +8,9 @@ use App\Models\ORM\tiket_producto;
 use App\Models\IApiControler;
 
 
-
 include_once __DIR__ . '/ticket.php';
 include_once __DIR__ . '/producto.php';
 include_once __DIR__ . '/ticket_producto.php';
-
-
 include_once __DIR__ . '../../modelAPI/IApiControler.php';
 
 
@@ -83,6 +80,7 @@ class ticketControler implements IApiControler{
             $producto->producto=$prod[$i];
             $producto->save();
         }
+
         $msj="La clave de su pedido es: " .$codigoTicket ;
         
         $foto=$request->getUploadedFiles();
@@ -93,9 +91,7 @@ class ticketControler implements IApiControler{
             $foto["imagen"]->moveTo('../src/app/imagenes/'.$codigoTicket.".".$extencion[1]);
     
         }
-
         ticketControler::calculaPrecio($codigoTicket);
-        
         $nuevoRetorno= $response->withJson($msj);
     	return $nuevoRetorno;
     }
@@ -121,6 +117,9 @@ class ticketControler implements IApiControler{
 
         $ticket = ticket::where('codigo',$ticketCodigo)->first();
         $ticket->estado=$estado;
+        if($estado=3){
+            $ticket->tiempo=0;
+        }
         $ticket->save();
     }
 
@@ -144,7 +143,6 @@ class ticketControler implements IApiControler{
         ->sum('precio');
         $pedido->precio=$precios;
         $pedido->save();
-
         return $precios;
     }
 

@@ -15,17 +15,7 @@ include_once __DIR__ . '../../modelAPI/AutentificadorJWT.php';
 
 class productosControler{
 
-    public function prepararPedido($request, $response, $args ){
-
-        $token=$request->getHeader('token');
-        $parametros= $request->getParams();
-        $datos=AutentificadorJWT::ObtenerData($token[0]);
-        $respuesta=ticket_productosControler::cambiarEstado($parametros["codigo"],$datos->codRol,2);
-        $newResponse= $response->withJson($respuesta,200);
-        return $newResponse;
-    }
-
-
+    
     public function verPendientes($request,$response,$args)
     {
         $token=$request->getHeader('token');
@@ -36,8 +26,54 @@ class productosControler{
         return $newResponse;
     }
 
+    public function prepararPedido($request, $response, $args ){
+
+        $token=$request->getHeader('token');
+        $parametros= $request->getParams();
+        $datos=AutentificadorJWT::ObtenerData($token[0]);
+        $respuesta=ticket_productosControler::cambiarEstado($parametros["codigo"],$datos->codRol,1,2);
+        
+        if($respuesta){
+            $mensaje=["mensaje"=>"Comienza preparacion de los pedidos"];
+            $newResponse = $response->withJson($mensaje,200);
+        }else{
+            $mensaje=["mensaje"=>"No habia pedidos o ya fueron tomados para preparar"];
+            $newResponse= $response->withJson($mensaje,200);
+        }
+
+        return $newResponse;
+    }
+
+
     public function finalizarPedido($request,$response,$args){
-        return $response;
+
+        $token=$request->getHeader('token');
+        $parametros= $request->getParams();
+        $datos=AutentificadorJWT::ObtenerData($token[0]);
+        $respuesta=ticket_productosControler::cambiarEstado($parametros["codigo"],$datos->codRol,2,3);
+        
+        if($respuesta){
+
+            $data=ticket_producto::where('codigo',$parametros["codigo"])->get();
+            $completo=true;
+            foreach($data as $value){
+                if($value->estado!=3) $completo=false;
+            }
+            if($completo){
+                ticketControler::cambiarEstado($parametros["codigo"],3);
+                $mensaje=["mensaje"=>"Se finalizaron los pedidos Y el ticket esta completo"];
+                $newResponse = $response->withJson($mensaje,200);
+            }else{
+                $mensaje=["mensaje"=>"Se finalizaron los pedidos"];
+                $newResponse = $response->withJson($mensaje,200);
+            }    
+
+        }else{
+            $mensaje=["mensaje"=>"No habia pedidos iniciados o ya fueron finalizados"];
+            $newResponse= $response->withJson($mensaje,200);
+        }
+
+        return $newResponse;
     }
 
 

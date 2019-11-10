@@ -12,7 +12,7 @@ return function (App $app) {
 
 	$app->group('/encargados', function(){
 
-        $this->get('/logIn', encargadosControler::class . ':logIn');
+        $this->post('/logIn', encargadosControler::class . ':logIn');
 
         $this->post('/altaEncargado', encargadosControler::class . ':altaUsuario');
 

@@ -36,18 +36,21 @@ class ticket_productosControler{
         return $data;
     }
 
-    public function cambiarEstado($codigo,$encargadoID,$estado){
-        $data=ticket_producto::join('productos','ticket_productos.producto','productos.id')
-            ->join('roles','roles.id','productos.encargado')
-            ->where('ticket_productos.estado','=','1')
-            ->where('productos.encargado','=',$encargadoID)
+    public function cambiarEstado($codigo,$encargadoID,$estadoInicial,$estadoactual){
+        $ret=false;
+        $data=ticket_producto::where('estado','=',$estadoInicial)
             ->where('codigo','=',$codigo)
             ->get();
-        foreach ($data as $value) {
-            $value->estado=2;
-            $value->save();
-        }
-        
+
+        foreach($data as $value){
+            $prod=producto::where('id','=',$value->producto)->first();
+            if($prod->encargado == $encargadoID){
+                $value->estado=$estadoactual;
+                $value->save();
+                $ret=true;
+            }
+        }   
+        return $ret;
     }
 
     public function estadoTodosProductos($codigo){

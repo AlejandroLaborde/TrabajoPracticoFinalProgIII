@@ -16,32 +16,43 @@ include_once __DIR__ . '/encargado.php';
 class encargadosControler {
 
     public function altaUsuario($request,$response,$args){
-        try{
-            $datos=$request->getParsedBody();
-            $encargado = new encargado();
-            $encargado->nombre=$datos["nombre"];
-            $encargado->apellido=$datos["apellido"];
-            $encargado->rol=$datos["rol"];
-            $encargado->usuario=$datos["usuario"];
-            $encargado->clave=$datos["clave"];
-            $encargado->save();
-            
-            $newResponse = $response->withJson($encargado
-            ->where('usuario',$datos["usuario"])
-            ->where('clave',$datos["clave"])
-            ->select(array('nombre','apellido','usuario'))->get()); 
 
-        }catch(Exception $e){
-            $newResponse = $response->withJson("Error al dar de alta usuario" . $e->getMessage()); 
+        $token=$request->getHeader('token');
+        $data=AutentificadorJWT::ObtenerData($token[0]);
+        if($data->codRol == 5)//socio
+        {
+            try{
+                $datos=$request->getParsedBody();
+                $encargado = new encargado();
+                $encargado->nombre=$datos["nombre"];
+                $encargado->apellido=$datos["apellido"];
+                $encargado->rol=$datos["rol"];
+                $encargado->usuario=$datos["usuario"];
+                $encargado->clave=$datos["clave"];
+                $encargado->save();
+                
+                $newResponse = $response->withJson($encargado
+                ->where('usuario',$datos["usuario"])
+                ->where('clave',$datos["clave"])
+                ->select(array('nombre','apellido','usuario'))->get()); 
+    
+            }catch(Exception $e){
+                $newResponse = $response->withJson("Error al dar de alta usuario" . $e->getMessage()); 
+            }
+              
+        }else{
+            $mensaje=["mensaje"=>"Para dar de alta un empleado debe enviar un token de tipo socio"];
+            $newResponse= $response->withJson($mensaje,200);
         }
+
         return $newResponse;
 
     }
 
     public function logIn($request,$response,$args){
-
+        
         try{
-            $datos=$request->getParams();
+            $datos=$request->getParsedBody();
             
             $query=encargado::where('usuario','=',$datos["usuario"])
             ->join('roles','encargados.rol','roles.id')
@@ -92,7 +103,7 @@ class encargadosControler {
                 }
                 
             }else{
-                $mensaje=["mensaje"=>"Para dar de alta un empleado debe enviar un token de tipo socio"];
+                $mensaje=["mensaje"=>"Para dar de baja un empleado debe enviar un token de tipo socio"];
                 $newResponse= $response->withJson($mensaje,200);
             }
 

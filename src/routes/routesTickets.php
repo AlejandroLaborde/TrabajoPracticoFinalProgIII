@@ -13,17 +13,22 @@ return function (App $app) {
 	$app->group('/tickets', function(){
 
         //recibe un ticket completo
-        $this->post('/nuevoTicket', ticketControler::class. ':CargarUno');
+        $this->post('/nuevoTicket', ticketControler::class. ':CargarTicket');
 
         //recibe un ticket completo
-        $this->get('/obtenerTicket', ticketControler::class . ':TraerUno');
+        $this->get('/obtenerTicket', ticketControler::class . ':TraerTicket');
         
         //recibe 2 parametros
-        $this->get('/estadosTickets', ticketControler::class . ':Estados');
+        $this->get('/estadosTickets', ticketControler::class . ':EstadosTickets');
+
+        //se entrega el pedido
+        $this->post('/servirTicket', ticketControler::class . ':servirTicket');
 
         //recibe ticket a cobrar
         $this->get('/cobrar', ticketControler::class . ':123');
-
+        
+        //recibe ticket a cobrar
+        $this->get('/test', ticketControler::class . ':test');
 
     });
 

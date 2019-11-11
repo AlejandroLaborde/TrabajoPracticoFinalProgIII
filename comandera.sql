@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 09-11-2019 a las 16:55:32
+-- Tiempo de generación: 11-11-2019 a las 03:54:05
 -- Versión del servidor: 10.4.8-MariaDB
 -- Versión de PHP: 7.3.11
 
@@ -66,7 +66,12 @@ CREATE TABLE `estados` (
 INSERT INTO `estados` (`id`, `estado`) VALUES
 (1, 'pendiente'),
 (2, 'en preparacion'),
-(3, 'listo para servir');
+(3, 'listo para servir'),
+(4, 'clientes esperando pedido'),
+(5, 'clientes comiendo'),
+(6, 'clientes pagando'),
+(7, 'cerrada'),
+(8, 'servido');
 
 -- --------------------------------------------------------
 
@@ -76,23 +81,24 @@ INSERT INTO `estados` (`id`, `estado`) VALUES
 
 CREATE TABLE `mesas` (
   `id` int(11) NOT NULL,
-  `codMesa` varchar(50) COLLATE utf8_spanish2_ci NOT NULL
+  `codMesa` varchar(50) COLLATE utf8_spanish2_ci NOT NULL,
+  `estado` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 --
 -- Volcado de datos para la tabla `mesas`
 --
 
-INSERT INTO `mesas` (`id`, `codMesa`) VALUES
-(1, 'MESA1'),
-(2, 'MESA2'),
-(3, 'MESA3'),
-(4, 'MESA4'),
-(5, 'MESA5'),
-(6, 'MESA6'),
-(7, 'MESA7'),
-(8, 'MESA8'),
-(9, 'MESA9');
+INSERT INTO `mesas` (`id`, `codMesa`, `estado`) VALUES
+(1, 'MESA1', 4),
+(2, 'MESA2', 7),
+(3, 'MESA3', 5),
+(4, 'MESA4', 7),
+(5, 'MESA5', 7),
+(6, 'MESA6', 7),
+(7, 'MESA7', 7),
+(8, 'MESA8', 7),
+(9, 'MESA9', 7);
 
 -- --------------------------------------------------------
 
@@ -170,25 +176,28 @@ CREATE TABLE `tickets` (
 --
 
 INSERT INTO `tickets` (`id`, `codigo`, `tiempo`, `precio`, `estado`, `cliente`, `imagen`, `codMesa`) VALUES
-(1, 'a07mY', 0, 0, 1, 'ale', '', 1),
-(2, 'hSTI3', 0, 0, 1, 'ale', '', 2),
-(3, 'wu3Ga', 0, 0, 1, 'ale', '', 3),
-(4, 'ciy9p', 0, 0, 1, 'ale', '', 4),
-(5, '8n9QH', 0, 0, 1, 'ale', '', 2),
-(6, 'XFNXO', 150, 235, 2, 'ale', '', 9),
-(7, 'WDdzC', 0, 0, 3, 'ale', '', 7),
-(8, '2C3Jr', 0, 0, 1, 'ale', '', 3),
-(9, 'eszeY', 0, 0, 1, 'ale', '', 9),
-(10, 'YYwSH', 0, 0, 1, 'ale', '', 4),
-(11, 'AV0cQ', 0, 0, 1, 'ale', '', 1),
-(12, 'Xamcd', 0, 0, 1, 'ale', '', 3),
-(13, 'hvpig', 0, 0, 1, 'ale', '', 5),
-(14, 'JOY3g', 0, 0, 1, 'ale', '', 8),
-(15, 'N77c8', 0, 0, 1, 'ale', '', 7),
-(16, 'yQAWk', 0, 0, 1, 'ale', '', 5),
-(17, 'ItgCg', 0, 0, 1, 'ale', '', 5),
-(18, 'kRHGg', 0, 0, 1, 'ale', '', 4),
-(20, 'aILUo', 90, 300, 1, 'alejandro', '', 7);
+(1, 'a07mY', 0, 0, 1, 'iara', '', 1),
+(2, 'hSTI3', 0, 0, 1, 'iara', '', 2),
+(3, 'wu3Ga', 0, 0, 8, 'iara', '', 3),
+(4, 'ciy9p', 0, 0, 1, 'iara', '', 4),
+(5, '8n9QH', 0, 0, 1, 'iara', '', 2),
+(6, 'XFNXO', 150, 235, 2, 'iara', '', 9),
+(7, 'WDdzC', 0, 0, 3, 'iara', '', 7),
+(8, '2C3Jr', 0, 0, 1, 'iara', '', 3),
+(9, 'eszeY', 0, 0, 1, 'iara', '', 9),
+(10, 'YYwSH', 0, 0, 1, 'iara', '', 4),
+(11, 'AV0cQ', 0, 0, 1, 'iara', '', 1),
+(12, 'Xamcd', 0, 0, 1, 'iara', '', 3),
+(13, 'hvpig', 0, 0, 1, 'iara', '', 5),
+(14, 'JOY3g', 0, 0, 1, 'iara', '', 8),
+(15, 'N77c8', 0, 0, 1, 'iara', '', 7),
+(16, 'yQAWk', 0, 0, 1, 'iara', '', 5),
+(17, 'ItgCg', 0, 0, 1, 'iara', '', 5),
+(18, 'kRHGg', 0, 0, 1, 'iara', '', 4),
+(20, 'aILUo', 90, 300, 1, 'alejandro', '', 7),
+(21, 'Z9DZB', 0, 0, 1, 'iara', '', 1),
+(22, 'E4DT5', 0, 205, 1, 'iara', '', 1),
+(23, '7weie', 0, 205, 1, 'iara', '', 1);
 
 -- --------------------------------------------------------
 
@@ -285,7 +294,16 @@ INSERT INTO `ticket_productos` (`codigo`, `producto`, `estado`, `id`) VALUES
 ('p8Mm2', 1, 0, 75),
 ('aILUo', 1, 0, 76),
 ('aILUo', 1, 0, 77),
-('aILUo', 1, 0, 78);
+('aILUo', 1, 0, 78),
+('Z9DZB', 1, 0, 79),
+('Z9DZB', 3, 0, 80),
+('Z9DZB', 7, 0, 81),
+('E4DT5', 1, 0, 82),
+('E4DT5', 3, 0, 83),
+('E4DT5', 7, 0, 84),
+('7weie', 1, 0, 85),
+('7weie', 3, 0, 86),
+('7weie', 7, 0, 87);
 
 --
 -- Índices para tablas volcadas
@@ -348,7 +366,7 @@ ALTER TABLE `encargados`
 -- AUTO_INCREMENT de la tabla `estados`
 --
 ALTER TABLE `estados`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `mesas`
@@ -372,13 +390,13 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT de la tabla `tickets`
 --
 ALTER TABLE `tickets`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT de la tabla `ticket_productos`
 --
 ALTER TABLE `ticket_productos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=79;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=88;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

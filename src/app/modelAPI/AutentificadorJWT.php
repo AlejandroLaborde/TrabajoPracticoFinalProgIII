@@ -26,7 +26,6 @@ class AutentificadorJWT
         {
             throw new Exception("El token esta vacio.");
         } 
-        // las siguientes lineas lanzan una excepcion, de no ser correcto o de haberse terminado el tiempo       
       
       try {
             $decodificado = JWT::decode(
@@ -35,10 +34,10 @@ class AutentificadorJWT
             self::$tipoEncriptacion
         );
             $valido=true;
-        } catch (Exception $e) {
-            throw $e;
+        } catch (\Exception $e) {
+            $valido=false;
         } 
-        
+        return $valido;
     }
     
    

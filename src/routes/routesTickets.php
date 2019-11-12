@@ -24,11 +24,11 @@ return function (App $app) {
         //se entrega el pedido
         $this->post('/servirTicket', ticketControler::class . ':servirTicket');
 
-        //recibe ticket a cobrar
-        $this->get('/cobrar', ticketControler::class . ':123');
+        //pide cuenta
+        $this->get('/pedirCuenta', ticketControler::class . ':pedirCuenta');//solo lo puedo hacer un socio/mozo
         
-        //recibe ticket a cobrar
-        $this->get('/test', ticketControler::class . ':test');
+        //cobrar ticket
+        $this->get('/cobrarTicket', ticketControler::class . ':cobrarTicket');//solo lo puede hacer el socio
 
     });
 

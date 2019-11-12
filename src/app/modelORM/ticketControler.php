@@ -133,14 +133,59 @@ class ticketControler{
         return $nuevoRetorno;
     }
 
+    public function pedirCuenta($request,$response,$args){
+        //busca ticket,
+        //devuelve codigo de ticket, que se consumio y precio total
+        //cambia estado de la mesa
+        $parametros=$request->getParams();
+        $ticket= ticket::where('codigo','=',$parametros['ticket'])->first();
+        $pedidos= ticket_producto::join('productos','productos.id','ticket_productos.producto')
+        ->where('codigo','=',$parametros['ticket'])->get();
+        $lista=[];
+        foreach($pedidos as $pedido){
+            $prod= new \stdClass;
+            $prod->producto=$pedido->descripcion;
+            $prod->precio=$pedido->precio;
+            array_push($lista,$prod);
+        }
+
+        $cuenta= new \stdClass;
+        $cuenta->cliente=$ticket->cliente;
+        $cuenta->ticket=$ticket->codigo;
+        $cuenta->pedido=$lista;
+        $cuenta->total=$ticket->precio;
+
+        $nuevoRetorno= $response->withJson($cuenta,200);
+        mesaControler::cambiaEstado($ticket->codMesa,6);
+        return $nuevoRetorno;
+    }
+
+    public function cobrarTicket($request,$response,$args){
+
+        $parametros=$request->getParams();
+        $ticket= ticket::where('codigo','=',$parametros['ticket'])->first();
+        ticketControler::cambiarEstado($parametros['ticket'],9);//cobrado
+        mesaControler::cambiaEstado($ticket->codMesa,7);//cerrada
+        $mensaje=["mensaje"=>"El ticket fue cobrado y la mesa cerrada"];
+        $nuevoRetorno= $response->withJson($mensaje,200);
+
+        return $nuevoRetorno;
+    }
 
 
     public function cambiarEstado($ticketCodigo,$estado){
 
         $ticket = ticket::where('codigo',$ticketCodigo)->first();
         $ticket->estado=$estado;
-        if($estado=3){
+        if($estado==3){//listoparaservir
             $ticket->tiempo=0;
+        }
+        if($estado==8){//servido
+            $pedidos=ticket_producto::where('codigo','=',$ticketCodigo)->get();
+            foreach ($pedidos as $pedido) {
+                $pedido->estado=$estado;
+                $pedido->save();
+            }
         }
         $ticket->save();
     }

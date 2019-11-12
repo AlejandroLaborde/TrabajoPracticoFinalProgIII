@@ -19,8 +19,7 @@ class encargadosControler {
 
         $token=$request->getHeader('token');
         $data=AutentificadorJWT::ObtenerData($token[0]);
-        if($data->codRol == 5)//socio
-        {
+
             try{
                 $datos=$request->getParsedBody();
                 $encargado = new encargado();
@@ -36,15 +35,12 @@ class encargadosControler {
                 ->where('clave',$datos["clave"])
                 ->select(array('nombre','apellido','usuario'))->get()); 
     
-            }catch(Exception $e){
-                $newResponse = $response->withJson("Error al dar de alta usuario" . $e->getMessage()); 
-            }
-              
-        }else{
-            $mensaje=["mensaje"=>"Para dar de alta un empleado debe enviar un token de tipo socio"];
-            $newResponse= $response->withJson($mensaje,200);
-        }
+            }catch(\Exception $e){
 
+                $mensaje=["mensaje"=>"Error al dar de alta usuario","causa"=>$e->getMessage()];
+                $newResponse = $response->withJson($mensaje,500); 
+            }
+            
         return $newResponse;
 
     }
@@ -74,7 +70,7 @@ class encargadosControler {
                 $newResponse = $response->withJson("No se pudo validar, usuario o contraseña incorrectos", 200); 
             }
         
-        }catch(Exception $e){
+        }catch(\Exception $e){
             
             $mensaje=["mensaje"=>"Error al intentar logIn"];
             $newResponse = $response->withJson($mensaje,500);
@@ -90,9 +86,7 @@ class encargadosControler {
         $body= $request->getParams();
         try{
             $data=AutentificadorJWT::ObtenerData($token[0]);
-            if($data->codRol == 5)//socio
-            {
-                
+
                 $usuario= encargado::where('usuario','=',$body["usuario"])->delete();
                 if($usuario){
                     $mensaje=["mensaje"=>"Se dio de baja el usuario"];
@@ -101,21 +95,13 @@ class encargadosControler {
                     $mensaje=["mensaje"=>"No se encontro el usuario ingresado"];
                 $newResponse = $response->withJson($mensaje,200);
                 }
-                
-            }else{
-                $mensaje=["mensaje"=>"Para dar de baja un empleado debe enviar un token de tipo socio"];
-                $newResponse= $response->withJson($mensaje,200);
-            }
 
-        }catch(Exeption $e){
+        }catch(\Exeption $e){
             $mensaje=["mensaje"=>"Fallo al dar de baja un usuario"];
             $newResponse= $response->withJson($mensaje,500);
         }
         return $newResponse;
     }
 
-    
-   
-  
     
 }

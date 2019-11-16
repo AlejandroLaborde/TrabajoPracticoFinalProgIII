@@ -26,8 +26,6 @@ class ticketControler{
         $codigoMesa=$parametros['mesa'];
         
         try{
-            
-    
             $rol= ticket::join('mesas','tickets.codMesa','mesas.id')     
             ->where('codigo',$parametros['codigo'])
             ->get();
@@ -66,10 +64,45 @@ class ticketControler{
     	return $nuevoRetorno;
     }
 
+    public function eliminarTicket($request, $response, $args){
+
+        $parametros = $request->getParsedBody();
+        try{
+            if(isset($parametros["codigo"])){
+
+                $ticketAeliminar=ticket::where('codigo','=',$parametros["codigo"])->first();
+                
+               
+                if($ticketAeliminar!=null){
+                    $ticketProductosAeliminar=ticket_producto::where('codigo','=',$parametros["codigo"])->delete();
+                    mesaControler::cambiaEstado($ticketAeliminar->codMesa,7);
+                    $ticketAeliminar->delete();
+                    $mensaje=["mensaje"=>"Se elimino el ticket"+$parametros["codigo"]];
+                    $nuevoRetorno= $response->withJson($mensaje,200);
+                }   else{
+                    $mensaje=["mensaje"=>"El ticket que desea eliminar no se encuentra en la base de datos"];
+                    $nuevoRetorno= $response->withJson($mensaje,200);
+                }        
+    
+            }else{
+                $mensaje=["mensaje"=>"Debe ingresar el parametro codigo"];
+                $nuevoRetorno= $response->withJson($mensaje,200); 
+            }
+        }catch(\Exception $e){
+            $mensaje=["mensaje"=>"Fallo al querer eliminar ticket"];
+            $nuevoRetorno= $response->withJson($mensaje,200);
+        }
+        
+       
+        return $nuevoRetorno;
+    }
 
     public function CargarTicket($request, $response, $args){
 
         if(mesaControler::devuelveMesaLibre() != 0){
+
+            $foto=$request->getUploadedFiles();
+
             $codigoTicket=ticketControler::generateRandomTicket();
             $body=$request->getParsedBody();
             $ticket = new ticket;
@@ -77,29 +110,33 @@ class ticketControler{
             $ticket->estado = 1;
             $ticket->cliente = $body["cliente"];
             $ticket->codMesa = mesaControler::devuelveMesaLibre();
-            $ticket->save();
-            mesaControler::cambiaEstado($ticket->codMesa,4);//clientes esperando pedido
-            $prod = explode(",", $body["productos"]);
-            
-            for($i=0;$i<count($prod);$i++){
-                $producto= new ticket_producto;
-                $producto->codigo=$codigoTicket;
-                $producto->producto=$prod[$i];
-                $producto->save();
-            }
-            
-            $msj="La clave de su pedido es: " .$codigoTicket ;
-            
-            $foto=$request->getUploadedFiles();
-    
+
             if($foto!=null){
                 $nombre=$foto["imagen"]->getClientFilename();
                 $extencion= explode(".",$nombre);
                 $foto["imagen"]->moveTo('../src/app/imagenes/'.$codigoTicket.".".$extencion[1]);
-        
+                $ticket->imagen = $codigoTicket.".".$extencion[1];
             }
+            $ticket->save();
+            mesaControler::cambiaEstado($ticket->codMesa,4);//clientes esperando pedido
+            $prod = explode(",", $body["productos"]);
+            
+            $productos=producto::all();
+            $ultimo=$productos->last();
+
+            for($i=0;$i<count($prod);$i++){
+                if($prod[$i]<=$ultimo->id){
+                    $producto= new ticket_producto;
+                    $producto->codigo=$codigoTicket;
+                    $producto->producto=$prod[$i];
+                    $producto->save();
+                }
+               
+            }
+            
+            $mensaje=["mensaje"=>"La clave de su pedido es: " .$codigoTicket];
             ticketControler::calculaPrecio($codigoTicket);
-            $nuevoRetorno= $response->withJson($msj);
+            $nuevoRetorno= $response->withJson($mensaje);
         }else{
             $mensaje=["mensaje"=>"no hay mesa disponible"];
             $nuevoRetorno= $response->withJson($mensaje,200);

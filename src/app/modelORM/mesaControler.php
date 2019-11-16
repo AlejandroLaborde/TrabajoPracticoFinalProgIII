@@ -23,10 +23,14 @@ class mesaControler {
         }
     }
 
-    public function cambiaEstado($codMesa,$nuevoEstado){
-        $mesa=mesa::where('id','=',$codMesa)->first();
-        $mesa->estado=$nuevoEstado;
-        $mesa->save();
+    public function cambiaEstado($codMesa,$nuevoEstado)
+    {
+    
+            $mesa=mesa::where('id','=',$codMesa)->first();
+            $mesa->estado=$nuevoEstado;
+            $mesa->save();
+
+        
     }
 
 

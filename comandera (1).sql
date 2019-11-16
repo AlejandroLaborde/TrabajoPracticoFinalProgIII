@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 11-11-2019 a las 03:54:05
+-- Tiempo de generación: 16-11-2019 a las 22:51:39
 -- Versión del servidor: 10.4.8-MariaDB
 -- Versión de PHP: 7.3.11
 
@@ -46,7 +46,8 @@ INSERT INTO `encargados` (`id`, `nombre`, `apellido`, `rol`, `clave`, `usuario`)
 (2, 'daniel', 'laborde', 1, '123', 'dan123'),
 (3, 'gustavo', 'laborde', 3, '123', 'gus123'),
 (4, 'Jenkins', 'laborde', 4, '123', 'jen123'),
-(5, 'Composer', 'laborde', 5, '123', 'com123');
+(5, 'Composer', 'laborde', 5, '123', 'com123'),
+(48, 'joana', 'soledad', 2, '951753', 'joana2695');
 
 -- --------------------------------------------------------
 
@@ -71,7 +72,8 @@ INSERT INTO `estados` (`id`, `estado`) VALUES
 (5, 'clientes comiendo'),
 (6, 'clientes pagando'),
 (7, 'cerrada'),
-(8, 'servido');
+(8, 'servido'),
+(9, 'cobrado');
 
 -- --------------------------------------------------------
 
@@ -91,8 +93,8 @@ CREATE TABLE `mesas` (
 
 INSERT INTO `mesas` (`id`, `codMesa`, `estado`) VALUES
 (1, 'MESA1', 4),
-(2, 'MESA2', 7),
-(3, 'MESA3', 5),
+(2, 'MESA2', 4),
+(3, 'MESA3', 7),
 (4, 'MESA4', 7),
 (5, 'MESA5', 7),
 (6, 'MESA6', 7),
@@ -119,18 +121,19 @@ CREATE TABLE `productos` (
 --
 
 INSERT INTO `productos` (`id`, `descripcion`, `encargado`, `tiempo`, `precio`) VALUES
-(1, 'coca-cola', 1, 30, 100),
-(2, 'vino', 1, 30, 150),
-(3, 'agua', 1, 30, 75),
-(4, 'jugo', 1, 30, 100),
-(5, 'ipa', 2, 90, 30),
-(6, 'honey', 2, 90, 30),
-(7, 'porter', 2, 90, 30),
-(8, 'scotish', 2, 90, 30),
-(9, 'Pollo con papas', 3, 9200, 1800),
-(10, 'Milanesa apolitana de pollo', 3, 250, 900),
-(11, 'Ravioles con salsa bolognesa', 3, 200, 600),
-(12, 'Parrilla completa', 3, 300, 1800);
+(1, 'coca-cola', 1, 5, 100),
+(2, 'vino', 1, 5, 150),
+(3, 'agua', 1, 5, 75),
+(4, 'jugo', 1, 5, 100),
+(5, 'ipa', 2, 10, 30),
+(6, 'honey', 2, 10, 30),
+(7, 'porter', 2, 10, 30),
+(8, 'scotish', 2, 10, 30),
+(9, 'Pollo con papas', 3, 30, 1800),
+(10, 'Milanesa apolitana de pollo', 3, 30, 900),
+(11, 'Ravioles con salsa bolognesa', 3, 30, 600),
+(12, 'Parrilla completa', 3, 40, 1800),
+(13, 'mila con fritas', 3, 30, 150);
 
 -- --------------------------------------------------------
 
@@ -176,28 +179,7 @@ CREATE TABLE `tickets` (
 --
 
 INSERT INTO `tickets` (`id`, `codigo`, `tiempo`, `precio`, `estado`, `cliente`, `imagen`, `codMesa`) VALUES
-(1, 'a07mY', 0, 0, 1, 'iara', '', 1),
-(2, 'hSTI3', 0, 0, 1, 'iara', '', 2),
-(3, 'wu3Ga', 0, 0, 8, 'iara', '', 3),
-(4, 'ciy9p', 0, 0, 1, 'iara', '', 4),
-(5, '8n9QH', 0, 0, 1, 'iara', '', 2),
-(6, 'XFNXO', 150, 235, 2, 'iara', '', 9),
-(7, 'WDdzC', 0, 0, 3, 'iara', '', 7),
-(8, '2C3Jr', 0, 0, 1, 'iara', '', 3),
-(9, 'eszeY', 0, 0, 1, 'iara', '', 9),
-(10, 'YYwSH', 0, 0, 1, 'iara', '', 4),
-(11, 'AV0cQ', 0, 0, 1, 'iara', '', 1),
-(12, 'Xamcd', 0, 0, 1, 'iara', '', 3),
-(13, 'hvpig', 0, 0, 1, 'iara', '', 5),
-(14, 'JOY3g', 0, 0, 1, 'iara', '', 8),
-(15, 'N77c8', 0, 0, 1, 'iara', '', 7),
-(16, 'yQAWk', 0, 0, 1, 'iara', '', 5),
-(17, 'ItgCg', 0, 0, 1, 'iara', '', 5),
-(18, 'kRHGg', 0, 0, 1, 'iara', '', 4),
-(20, 'aILUo', 90, 300, 1, 'alejandro', '', 7),
-(21, 'Z9DZB', 0, 0, 1, 'iara', '', 1),
-(22, 'E4DT5', 0, 205, 1, 'iara', '', 1),
-(23, '7weie', 0, 205, 1, 'iara', '', 1);
+(1, 'Msrug', 0, 4720, 1, 'trabajoPractico', '', 2);
 
 -- --------------------------------------------------------
 
@@ -217,93 +199,14 @@ CREATE TABLE `ticket_productos` (
 --
 
 INSERT INTO `ticket_productos` (`codigo`, `producto`, `estado`, `id`) VALUES
-('a07mY', 1, 2, 1),
-('a07mY', 3, 1, 2),
-('a07mY', 5, 1, 3),
-('a07mY', 8, 1, 4),
-('hSTI3', 1, 1, 5),
-('hSTI3', 3, 1, 6),
-('hSTI3', 5, 1, 7),
-('hSTI3', 8, 1, 8),
-('wu3Ga', 1, 1, 9),
-('wu3Ga', 3, 1, 10),
-('wu3Ga', 5, 1, 11),
-('wu3Ga', 8, 1, 12),
-('ciy9p', 1, 1, 13),
-('ciy9p', 3, 1, 14),
-('ciy9p', 5, 1, 15),
-('ciy9p', 8, 1, 16),
-('8n9QH', 1, 1, 17),
-('8n9QH', 3, 1, 18),
-('8n9QH', 5, 1, 19),
-('8n9QH', 8, 1, 20),
-('XFNXO', 1, 1, 21),
-('XFNXO', 3, 1, 22),
-('XFNXO', 5, 3, 23),
-('XFNXO', 8, 1, 24),
-('WDdzC', 1, 1, 25),
-('WDdzC', 3, 1, 26),
-('WDdzC', 5, 1, 27),
-('WDdzC', 8, 1, 28),
-('2C3Jr', 1, 1, 29),
-('2C3Jr', 3, 1, 30),
-('2C3Jr', 5, 1, 31),
-('2C3Jr', 8, 1, 32),
-('eszeY', 1, 1, 33),
-('eszeY', 3, 1, 34),
-('eszeY', 5, 1, 35),
-('eszeY', 8, 1, 36),
-('YYwSH', 1, 1, 37),
-('YYwSH', 3, 1, 38),
-('YYwSH', 5, 1, 39),
-('YYwSH', 8, 1, 40),
-('AV0cQ', 1, 1, 41),
-('AV0cQ', 3, 1, 42),
-('AV0cQ', 5, 1, 43),
-('AV0cQ', 8, 1, 44),
-('Xamcd', 1, 1, 45),
-('Xamcd', 3, 1, 46),
-('Xamcd', 5, 1, 47),
-('Xamcd', 8, 1, 48),
-('hvpig', 1, 1, 49),
-('hvpig', 3, 1, 50),
-('hvpig', 5, 1, 51),
-('hvpig', 8, 1, 52),
-('JOY3g', 1, 1, 53),
-('JOY3g', 3, 1, 54),
-('JOY3g', 5, 1, 55),
-('JOY3g', 8, 1, 56),
-('N77c8', 1, 1, 57),
-('N77c8', 3, 1, 58),
-('N77c8', 5, 1, 59),
-('N77c8', 8, 1, 60),
-('yQAWk', 1, 1, 61),
-('yQAWk', 3, 1, 62),
-('yQAWk', 5, 1, 63),
-('yQAWk', 8, 1, 64),
-('ItgCg', 1, 1, 65),
-('ItgCg', 3, 1, 66),
-('ItgCg', 5, 1, 67),
-('ItgCg', 8, 1, 68),
-('kRHGg', 1, 1, 69),
-('kRHGg', 3, 1, 70),
-('kRHGg', 5, 1, 71),
-('kRHGg', 8, 1, 72),
-('p8Mm2', 1, 0, 73),
-('p8Mm2', 1, 0, 74),
-('p8Mm2', 1, 0, 75),
-('aILUo', 1, 0, 76),
-('aILUo', 1, 0, 77),
-('aILUo', 1, 0, 78),
-('Z9DZB', 1, 0, 79),
-('Z9DZB', 3, 0, 80),
-('Z9DZB', 7, 0, 81),
-('E4DT5', 1, 0, 82),
-('E4DT5', 3, 0, 83),
-('E4DT5', 7, 0, 84),
-('7weie', 1, 0, 85),
-('7weie', 3, 0, 86),
-('7weie', 7, 0, 87);
+('Msrug', 1, 1, 1),
+('Msrug', 5, 1, 2),
+('Msrug', 6, 1, 3),
+('Msrug', 7, 1, 4),
+('Msrug', 8, 1, 5),
+('Msrug', 9, 1, 6),
+('Msrug', 10, 1, 7),
+('Msrug', 12, 1, 8);
 
 --
 -- Índices para tablas volcadas
@@ -360,13 +263,13 @@ ALTER TABLE `ticket_productos`
 -- AUTO_INCREMENT de la tabla `encargados`
 --
 ALTER TABLE `encargados`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 
 --
 -- AUTO_INCREMENT de la tabla `estados`
 --
 ALTER TABLE `estados`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `mesas`
@@ -378,7 +281,7 @@ ALTER TABLE `mesas`
 -- AUTO_INCREMENT de la tabla `productos`
 --
 ALTER TABLE `productos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de la tabla `roles`
@@ -390,13 +293,13 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT de la tabla `tickets`
 --
 ALTER TABLE `tickets`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `ticket_productos`
 --
 ALTER TABLE `ticket_productos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=88;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -37,7 +37,7 @@ class encargadosControler {
     
             }catch(\Exception $e){
 
-                $mensaje=["mensaje"=>"Error al dar de alta usuario","causa"=>$e->getMessage()];
+                $mensaje=["mensaje"=>"Error al dar de alta usuario","causa"=>"ya existe el usuario ingresado"];
                 $newResponse = $response->withJson($mensaje,500); 
             }
             

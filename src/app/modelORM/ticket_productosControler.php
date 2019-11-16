@@ -15,7 +15,7 @@ class ticket_productosControler{
     }
 
     
-    public function verPendientes($codigo,$encargadoID){
+    public function verPendiente($codigo,$encargadoID){
 
         if($encargadoID==5){
             $data=ticket_producto::join('productos','ticket_productos.producto','productos.id')
@@ -49,6 +49,23 @@ class ticket_productosControler{
                 $value->save();
                 $ret=true;
             }
+        }   
+        return $ret;
+    }
+
+    public function estadoInicial($codigo,$estadoInicial){
+        $ret=false;
+        $data=ticket_producto::where('estado','=','0')
+            ->where('codigo','=',$codigo)
+            ->get();
+            
+        foreach($data as $value){
+            $prod=producto::where('id','=',$value->producto)->first();
+            
+                $value->estado=$estadoInicial;
+                $value->save();
+                $ret=true;
+            
         }   
         return $ret;
     }

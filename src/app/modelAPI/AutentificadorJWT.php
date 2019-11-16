@@ -1,7 +1,7 @@
 <?php
 namespace App\Models;
 use Firebase\JWT\JWT;
-
+use Exception;
 class AutentificadorJWT
 {
     private static $claveSecreta = 'ClaveSecreta2695175342382582';

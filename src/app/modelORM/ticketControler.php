@@ -4,7 +4,7 @@ namespace App\Models\ORM;
 
 use App\Models\ORM\ticket;
 use App\Models\ORM\producto;
-use App\Models\ORM\tiket_producto;
+use App\Models\ORM\ticket_producto;
 use App\Models\ORM\mesa;
 use App\Models\IApiControler;
 use App\Models\AutentificadorJWT;
@@ -126,10 +126,12 @@ class ticketControler{
 
             for($i=0;$i<count($prod);$i++){
                 if($prod[$i]<=$ultimo->id){
+                    $estado=1;
                     $producto= new ticket_producto;
                     $producto->codigo=$codigoTicket;
                     $producto->producto=$prod[$i];
                     $producto->save();
+                    ticket_productosControler::estadoInicial($codigoTicket,1);
                 }
                
             }

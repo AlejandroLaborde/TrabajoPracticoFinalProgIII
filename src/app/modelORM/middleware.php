@@ -35,7 +35,7 @@ class middleware{
         if( $datos->codRol == 5){
             $response = $next( $request, $response);
         }else{
-            $mensaje=["mensaje"=>"Token debe ser de un socio"];
+            $mensaje=["mensaje"=>"El Token debe ser de un socio"];
             $response = $response->withJson($mensaje,500);
         }
         return $response;
@@ -45,7 +45,7 @@ class middleware{
 
         $token=$request->getHeader('token');
         $datos=AutentificadorJWT::ObtenerData($token[0]);
-        if( $datos->codRol == 5){
+        if( $datos->codRol == 5 || $datos->codRol == 4){
             $response = $next( $request, $response);
         }else{
             $mensaje=["mensaje"=>"Token debe ser de un socio o mozo"];

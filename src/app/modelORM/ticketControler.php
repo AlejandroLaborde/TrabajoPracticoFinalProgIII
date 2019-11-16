@@ -22,10 +22,10 @@ class ticketControler{
 
     public function TraerTicket($request, $response, $args){
         $parametros=$request->getParams();
-        $codigoPedido=$parametros['codigo'];
-        $codigoMesa=$parametros['mesa'];
-        
-        try{
+        if(isset($parametros['codigo']) && isset($parametros['mesa'])){
+
+            $codigoPedido=$parametros['codigo'];
+            $codigoMesa=$parametros['mesa'];
             $rol= ticket::join('mesas','tickets.codMesa','mesas.id')     
             ->where('codigo',$parametros['codigo'])
             ->get();
@@ -33,21 +33,24 @@ class ticketControler{
             ->where('codigo',$parametros['codigo'])
             ->get();
             
-           
             if($rol[0]->codMesa==$codigoMesa && $codigoPedido==$rol[0]->codigo){
 
                 $ret=new ticket();
+                $ret->cliente=$rol[0]->cliente;
+                $ret->ticket=$rol[0]->codigo;
+                $ret->codigoMesa=$codigoMesa;
                 $ret->estado=$estado[0]->estado;
                 $ret->tiempo=$rol[0]->tiempo;
                 
                 $nuevoResp=$response->withJson($ret,200);
             }else
             {
-                $nuevoResp=$response->withJson("La combinacion codigo - mesa es incorrecto");
+                $mensaje=["mensaje"=>"La combinacion codigo - mesa es incorrecto"];
+                $nuevoResp= $response->withJson($mensaje,200);
             }
-           
-        }catch(Exception $e){
-            $nuevoResp=$response->withJson("Error al leer los parametros");
+        }else{
+            $mensaje=["mensaje"=>"Debe ingresar los parametros codigo y mesa"];
+            $nuevoResp= $response->withJson($mensaje,200);
         }
         
     	return $nuevoResp;
@@ -136,7 +139,7 @@ class ticketControler{
                
             }
             
-            $mensaje=["mensaje"=>"La clave de su pedido es: " .$codigoTicket];
+            $mensaje=["mensaje"=>"La clave de su pedido es: " .$codigoTicket,"codigo de mesa"=>"MESA".$ticket->codMesa];
             ticketControler::calculaPrecio($codigoTicket);
             $nuevoRetorno= $response->withJson($mensaje);
         }else{

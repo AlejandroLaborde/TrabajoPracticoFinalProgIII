@@ -21,7 +21,7 @@ class productosControler{
         $token=$request->getHeader('token');
         $parametros= $request->getParams();
         $datos=AutentificadorJWT::ObtenerData($token[0]);
-        $respuesta=ticket_productosControler::verPendientes($parametros["codigo"],$datos->codRol);
+        $respuesta=ticket_productosControler::verPendiente($datos->codRol);
         $newResponse= $response->withJson($respuesta,200);
         return $newResponse;
     }
@@ -34,6 +34,7 @@ class productosControler{
         $respuesta=ticket_productosControler::cambiarEstado($parametros["codigo"],$datos->codRol,1,2);
         
         if($respuesta){
+            ticketControler::cambiarEstado($parametros["codigo"],2);
             $mensaje=["mensaje"=>"Comienza preparacion de los pedidos"];
             $newResponse = $response->withJson($mensaje,200);
         }else{

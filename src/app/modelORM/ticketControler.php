@@ -80,7 +80,7 @@ class ticketControler{
                     $ticketProductosAeliminar=ticket_producto::where('codigo','=',$parametros["codigo"])->delete();
                     mesaControler::cambiaEstado($ticketAeliminar->codMesa,7);
                     $ticketAeliminar->delete();
-                    $mensaje=["mensaje"=>"Se elimino el ticket"+$parametros["codigo"]];
+                    $mensaje=["mensaje"=>"Se elimino el ticket"];
                     $nuevoRetorno= $response->withJson($mensaje,200);
                 }   else{
                     $mensaje=["mensaje"=>"El ticket que desea eliminar no se encuentra en la base de datos"];
@@ -206,10 +206,16 @@ class ticketControler{
 
         $parametros=$request->getParams();
         $ticket= ticket::where('codigo','=',$parametros['ticket'])->first();
-        ticketControler::cambiarEstado($parametros['ticket'],9);//cobrado
-        mesaControler::cambiaEstado($ticket->codMesa,7);//cerrada
-        $mensaje=["mensaje"=>"El ticket fue cobrado y la mesa cerrada"];
-        $nuevoRetorno= $response->withJson($mensaje,200);
+        if($ticket!=null){
+            ticketControler::cambiarEstado($parametros['ticket'],9);//cobrado
+            mesaControler::cambiaEstado($ticket->codMesa,7);//cerrada
+            $mensaje=["mensaje"=>"El ticket fue cobrado y la mesa cerrada"];
+            $nuevoRetorno= $response->withJson($mensaje,200);
+        }else{
+            $mensaje=["mensaje"=>"No se encontro el ticket enviado"];
+            $nuevoRetorno= $response->withJson($mensaje,200);
+        }
+        
 
         return $nuevoRetorno;
     }
@@ -219,6 +225,8 @@ class ticketControler{
 
         $ticket = ticket::where('codigo',$ticketCodigo)->first();
         $ticket->estado=$estado;
+        ticketControler::cambiaTiempo($ticketCodigo);
+
         if($estado==3){//listoparaservir
             $ticket->tiempo=0;
         }
@@ -242,7 +250,6 @@ class ticketControler{
         //calculo el tiempo en base a los productos del pedido que aun no terminaron
         $pedido->tiempo=$tiempo;
         $pedido->save();
-
     }
 
     public function calculaPrecio($ticket){

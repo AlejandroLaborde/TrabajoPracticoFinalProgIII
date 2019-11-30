@@ -102,6 +102,14 @@ class encargadosControler {
         }
         return $newResponse;
     }
+    
+    public function listarEncargados($request,$response,$args){
+        
+        $usuario= encargado::all();
+        $newResponse = $response->withJson($usuario,200);
+
+        return $newResponse;
+    }
 
     
 }

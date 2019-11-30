@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 16-11-2019 a las 22:51:39
+-- Tiempo de generación: 30-11-2019 a las 18:58:09
 -- Versión del servidor: 10.4.8-MariaDB
 -- Versión de PHP: 7.3.11
 
@@ -52,6 +52,31 @@ INSERT INTO `encargados` (`id`, `nombre`, `apellido`, `rol`, `clave`, `usuario`)
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `encuestas`
+--
+
+CREATE TABLE `encuestas` (
+  `id` int(11) NOT NULL,
+  `codigo` varchar(50) COLLATE utf8_spanish2_ci NOT NULL,
+  `puntos_mesa` int(11) NOT NULL,
+  `puntos_restaurante` int(11) NOT NULL,
+  `puntos_mozo` int(11) NOT NULL,
+  `puntos_cocinero` int(11) NOT NULL,
+  `comentarios` varchar(66) COLLATE utf8_spanish2_ci NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+
+--
+-- Volcado de datos para la tabla `encuestas`
+--
+
+INSERT INTO `encuestas` (`id`, `codigo`, `puntos_mesa`, `puntos_restaurante`, `puntos_mozo`, `puntos_cocinero`, `comentarios`, `created_at`, `updated_at`) VALUES
+(3, 'Hd8xx', 1, 1, 1, 1, 'La comida no era buena pero la cerveza si', '2019-11-30 21:57:41', '2019-11-30 21:57:41');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `estados`
 --
 
@@ -92,8 +117,8 @@ CREATE TABLE `mesas` (
 --
 
 INSERT INTO `mesas` (`id`, `codMesa`, `estado`) VALUES
-(1, 'MESA1', 4),
-(2, 'MESA2', 4),
+(1, 'MESA1', 7),
+(2, 'MESA2', 7),
 (3, 'MESA3', 7),
 (4, 'MESA4', 7),
 (5, 'MESA5', 7),
@@ -179,7 +204,7 @@ CREATE TABLE `tickets` (
 --
 
 INSERT INTO `tickets` (`id`, `codigo`, `tiempo`, `precio`, `estado`, `cliente`, `imagen`, `codMesa`) VALUES
-(1, 'Msrug', 0, 4720, 1, 'trabajoPractico', '', 2);
+(2, 'Hd8xx', 0, 4720, 9, 'trabajoPractico', 'Hd8xx.jpg', 2);
 
 -- --------------------------------------------------------
 
@@ -199,14 +224,14 @@ CREATE TABLE `ticket_productos` (
 --
 
 INSERT INTO `ticket_productos` (`codigo`, `producto`, `estado`, `id`) VALUES
-('Msrug', 1, 1, 1),
-('Msrug', 5, 1, 2),
-('Msrug', 6, 1, 3),
-('Msrug', 7, 1, 4),
-('Msrug', 8, 1, 5),
-('Msrug', 9, 1, 6),
-('Msrug', 10, 1, 7),
-('Msrug', 12, 1, 8);
+('Hd8xx', 1, 3, 9),
+('Hd8xx', 5, 3, 10),
+('Hd8xx', 6, 3, 11),
+('Hd8xx', 7, 3, 12),
+('Hd8xx', 8, 3, 13),
+('Hd8xx', 9, 3, 14),
+('Hd8xx', 10, 3, 15),
+('Hd8xx', 12, 3, 16);
 
 --
 -- Índices para tablas volcadas
@@ -218,6 +243,12 @@ INSERT INTO `ticket_productos` (`codigo`, `producto`, `estado`, `id`) VALUES
 ALTER TABLE `encargados`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `usuario` (`usuario`);
+
+--
+-- Indices de la tabla `encuestas`
+--
+ALTER TABLE `encuestas`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indices de la tabla `estados`
@@ -266,6 +297,12 @@ ALTER TABLE `encargados`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 
 --
+-- AUTO_INCREMENT de la tabla `encuestas`
+--
+ALTER TABLE `encuestas`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT de la tabla `estados`
 --
 ALTER TABLE `estados`
@@ -293,13 +330,13 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT de la tabla `tickets`
 --
 ALTER TABLE `tickets`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `ticket_productos`
 --
 ALTER TABLE `ticket_productos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
